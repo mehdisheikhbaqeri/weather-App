@@ -12,11 +12,47 @@ body {
   align-items: center;
   background: linear-gradient(#80cbc4, #fff59d);
   font-family: "Shadows Into Light";
-  color: white;
+  color: #1f1f1f;
 }
 
 #WeatherApp {
   margin-bottom: 100px;
   font-family: "Shizuru";
   font-size: 70px;
+}
+.icon img {
+  height: 256px;
+  width: 256px;
+}
+
+.location,
+.temperature {
+  height: 30vh;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.temperature {
+  flex-direction: column;
+}
+
+.temperature-description {
+  font-size: 25px;
+}
+
+.degree-section {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.degree-section span {
+  margin: 10px;
+  font-size: 30px;
+}
+
+.degree-section h2 {
+  font-size: 40px;
 }
