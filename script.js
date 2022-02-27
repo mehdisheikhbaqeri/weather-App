@@ -81,34 +81,75 @@ const deg = document.querySelector(".degree-section h2");
 const unit = document.querySelector(".degree-section span");
 const tede = document.querySelector(".temperature-description");
 
-window.addEventListener("load", function () {
-  getLoc().then((locData) => {
+// window.addEventListener("load", function () {
+//   getLoc().then((locData) => {
+//     const timeZone = locData.timezone;
+//     loti.textContent = timeZone;
+//     getWeather(locData.lat, locData.lon).then((weData) => {
+//       const weTemp = weData.main.temp;
+//       const weMain = weData.weather[0].main;
+//       const weDes = weData.weather[0].description;
+
+//       const iconName = getIcon(weMain);
+//       icon.innerHTML = `<img src='icons/${iconName}'></img>`;
+
+//       deg.textContent = Math.floor(weTemp);
+//       unit.textContent = "K";
+//       dese.addEventListener("click", function (e) {
+//         if (unit.textContent == "K") {
+//           deg.textContent = getTemp(weTemp).far;
+//           unit.textContent = "F";
+//         } else if (unit.textContent == "F") {
+//           deg.textContent = getTemp(weTemp).can;
+//           unit.textContent = "C";
+//         } else {
+//           deg.textContent = getTemp(weTemp).kel;
+//           unit.textContent = "K";
+//         }
+//       });
+//       tede.textContent = weDes;
+//       console.log(weTemp, weMain, weDes);
+//     });
+//   });
+// });
+
+getLoc()
+  .then((locData) => {
     const timeZone = locData.timezone;
     loti.textContent = timeZone;
-    getWeather(locData.lat, locData.lon).then((weData) => {
-      const weTemp = weData.main.temp;
-      const weMain = weData.weather[0].main;
-      const weDes = weData.weather[0].description;
+    console.log(locData);
+    return getWeather(locData.lat, locData.lon);
+  })
+  .then((weatherData) => {
+    console.log(weatherData);
 
-      const iconName = getIcon(weMain);
-      icon.innerHTML = `<img src='icons/${iconName}'></img>`;
+    const weTemp = weatherData.main.temp;
+    const weMain = weatherData.weather[0].main;
+    const weDes = weatherData.weather[0].description;
 
-      deg.textContent = Math.floor(weTemp);
-      unit.textContent = "K";
-      dese.addEventListener("click", function (e) {
-        if (unit.textContent == "K") {
-          deg.textContent = getTemp(weTemp).far;
-          unit.textContent = "F";
-        } else if (unit.textContent == "F") {
-          deg.textContent = getTemp(weTemp).can;
-          unit.textContent = "C";
-        } else {
-          deg.textContent = getTemp(weTemp).kel;
-          unit.textContent = "K";
-        }
-      });
-      tede.textContent = weDes;
-      console.log(weTemp, weMain, weDes);
+    //display icon
+    const iconName = getIcon(weMain);
+    const iconImg = document.createElement("img");
+    iconImg.src = `icon/${iconName}`;
+    icon.append(iconImg);
+
+    //display unit
+    deg.textContent = Math.floor(weTemp);
+    unit.textContent = "K";
+
+    dese.addEventListener("click", () => {
+      if (unit.textContent === "K") {
+        deg.textContent = getTemp(weTemp).far;
+        unit.textContent = "F";
+      } else if (unit.textContent === "F") {
+        deg.textContent = getTemp(weTemp).can;
+        unit.textContent = "C";
+      } else {
+        deg.textContent = getTemp(weTemp).kel;
+        unit.textContent = "K";
+      }
     });
+
+    //display description
+    tede.textContent = weDes;
   });
-});
